@@ -6,15 +6,16 @@ sides = []
 end
 
 def check_triangle(arr)
+  return 'равносторонний' if arr.uniq.size == 1
   cat1, cat2, hyp = arr.sort
   if hyp ** 2 == cat1 ** 2 + cat2 ** 2
     if cat1 == cat2
-      puts 'прямоугольный и равнобедренный'
+      return 'прямоугольный и равнобедренный'
     else
-      puts 'прямоугольный'
+      return 'прямоугольный'
     end
-    puts 'не прямоугольный'
   end
+  return 'не прямоугольный'
 end
 
 puts check_triangle(sides)
