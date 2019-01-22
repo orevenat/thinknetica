@@ -23,4 +23,4 @@ def quadratic_equation(a, b, c)
   message
 end
 
-puts quadratic_equation(* coeff)
+puts quadratic_equation(*coeff)
