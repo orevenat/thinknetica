@@ -1,8 +1,20 @@
-puts 'Введите сторону 1'
-a = gets.chomp.to_i
+sides = []
 
-puts 'Введите сторону 2'
-b = gets.chomp.to_i
+3.times do
+  puts 'Введите сторону'
+  sides << gets.chomp.to_i
+end
 
-puts 'Введите сторону 3'
-c = gets.chomp.to_i
+def check_triangle(arr)
+  cat1, cat2, hyp = arr.sort
+  if hyp ** 2 == cat1 ** 2 + cat2 ** 2
+    if cat1 == cat2
+      puts 'прямоугольный и равнобедренный'
+    else
+      puts 'прямоугольный'
+    end
+    puts 'не прямоугольный'
+  end
+end
+
+puts check_triangle(sides)
