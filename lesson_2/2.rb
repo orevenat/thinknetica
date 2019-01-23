@@ -1,10 +1,9 @@
 numbers = []
 
 i = 10
-loop do
+while i <= 100
   numbers << i
   i += 5
-  break if i > 100
 end
 
 puts numbers

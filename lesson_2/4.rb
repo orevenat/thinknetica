@@ -1,4 +1,4 @@
-alphabet = Hash[(:a..:z).zip(1..26)]
+alphabet = (:a..:z).zip(1..27).to_h
 
 vowels = %i[a e i o u]
 

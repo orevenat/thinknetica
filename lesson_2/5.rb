@@ -8,14 +8,7 @@ month = gets.chomp.to_i
 puts 'Введите год'
 year = gets.chomp.to_i
 
-result = 0
 months_length[2] = 29 if (year % 4 == 0 && year % 100 != 0) || year % 400 == 0
-i = 1
-count = month - 1
-count.times do
-  result += months_length[i]
-  i += 1
-end
-result += day
+result = months_length.values.first(month - 1).sum + day
 
 puts result
