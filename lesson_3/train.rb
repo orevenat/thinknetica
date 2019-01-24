@@ -3,7 +3,7 @@ class Train
   attr_reader :carriages
   attr_reader :type
 
-  def initialize(number, type, carriage)
+  def initialize(number, type, carriages)
     @number = number
     @type = type
     @carriages = carriages
@@ -32,7 +32,7 @@ class Train
     @route.stations[@current_station].add_train(self)
   end
 
-  def next_station
+  def to_next_station
     if @route.stations.size > @current_station + 1
       @route.stations[@current_station].send_train(self)
       @current_station += 1
@@ -40,7 +40,7 @@ class Train
     end
   end
 
-  def prev_station
+  def to_prev_station
     if @current_station > 0
       @route.stations[@current_station].send_train(self)
       @current_station -= 1
@@ -48,12 +48,16 @@ class Train
     end
   end
 
-  def nearest_stations
+  def prev_station
+    @route.stations[@current_station - 1] if @current_station > 0
+  end
+
+  def current_station
+    @route.stations[@current_station]
+  end
+
+  def next_station
     stations = @route.stations
-    nearest = {}
-    nearest[:prev] =stations[@current_station - 1] if @current_station > 0
-    nearest[:current] = stations[@current_station]
-    nearest[:next] = stations[@current_station + 1] if @current_station + 1 < stations.size
-    nearest
+    stations[@current_station + 1] if @current_station + 1 < stations.size
   end
 end
