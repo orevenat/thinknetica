@@ -2,6 +2,7 @@ class Station
   TYPE = [:passanger, :cargo]
 
   attr_reader :trains
+  attr_reader :name
 
   def initialize(name)
     @name = name
@@ -16,11 +17,8 @@ class Station
     @trains.delete(train)
   end
 
-  def trains_by_type
-    TYPE.each do |type|
-      current_type_trains = trains.select { |train| train.type == type }
-      count = current_type_trains.size
-      puts "#{type}: #{count}"
-    end
+  def trains_by_type(type)
+    current_type_trains = trains.select { |train| train.type == type }
+    current_type_trains.size
   end
 end

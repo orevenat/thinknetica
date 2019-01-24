@@ -1,21 +1,25 @@
 class Train
-  attr_accessor :speed
-  attr_reader :carriage
+  attr_reader :speed
+  attr_reader :carriages
   attr_reader :type
 
   def initialize(number, type, carriage)
     @number = number
     @type = type
-    @carriage = carriage
+    @carriages = carriages
     @speed = 0
   end
 
   def add_carriage
-    @carriage += 1 if @speed.zero?
+    @carriages += 1 if speed.zero?
   end
 
   def remove_carriage
-    @carriage -= 1 if @speed.zero?
+    @carriages -= 1 if speed.zero?
+  end
+
+  def add_speed(value)
+    @speed += value
   end
 
   def stop
@@ -25,20 +29,31 @@ class Train
   def add_route(route)
     @route = route
     @current_station = 0
+    @route.stations[@current_station].add_train(self)
   end
 
   def next_station
-    @current_station += 1 if @route.all_stations.size > @current_station + 1
+    if @route.stations.size > @current_station + 1
+      @route.stations[@current_station].send_train(self)
+      @current_station += 1
+      @route.stations[@current_station].add_train(self)
+    end
   end
 
   def prev_station
-    @current_station -= 1
+    if @current_station > 0
+      @route.stations[@current_station].send_train(self)
+      @current_station -= 1
+      @route.stations[@current_station].add_train(self)
+    end
   end
 
-  def print_stations
-    stations = @route.all_stations
-    puts "prev station: #{stations[@current_station - 1]}" if @current_station > 0
-    puts "current station: #{stations[@current_station]}"
-    puts "next_station #{stations[@current_station + 1]}" if @current_station + 1 < stations.size
+  def nearest_stations
+    stations = @route.stations
+    nearest = {}
+    nearest[:prev] =stations[@current_station - 1] if @current_station > 0
+    nearest[:current] = stations[@current_station]
+    nearest[:next] = stations[@current_station + 1] if @current_station + 1 < stations.size
+    nearest
   end
 end

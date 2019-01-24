@@ -22,20 +22,12 @@ route1.add_station(station4)
 route1.add_station(station5)
 route1.add_station(station6)
 route1.remove_station(station4)
-puts route1.all_stations
 
 train1.add_route(route1)
 train2.add_route(route1)
 train3.add_route(route1)
 
-train1.speed = 50
+train1.add_speed(50)
 train1.next_station
 train1.next_station
-train1.print_stations
-
-station2.add_train(train2)
-station2.add_train(train1)
-station2.add_train(train3)
-station2.send_train(train2)
-station2.add_train(train4)
-station2.trains_by_type
+puts train1.nearest_stations
