@@ -17,7 +17,7 @@ class Station
     @trains.delete(train)
   end
 
-  def trains_by_type(type)
+  def trains_count_by_type(type)
     current_type_trains = trains.select { |train| train.type == type }
     current_type_trains.size
   end
