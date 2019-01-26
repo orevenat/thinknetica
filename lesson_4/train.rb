@@ -32,7 +32,7 @@ class Train
   def add_route(route)
     self.route = route
     self.current_station = 0
-    route.stations[current_station].add_train(self)
+    self.route.stations[current_station].add_train(self)
   end
 
   def to_next_station
@@ -69,9 +69,8 @@ class Train
     speed.zero? && !carriages.empty?
   end
 
-
   def carriage_type_same?(carriage)
-    carriage.class.to_s.to_sym == :Carriage
+    carriage.class == Carriage
   end
 
   def move_to_next_station

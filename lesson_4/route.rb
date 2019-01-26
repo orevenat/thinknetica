@@ -6,7 +6,7 @@ class Route
   end
 
   def name
-    stations.join('-')
+    stations.map(&:name).join('-')
   end
 
   def add_station(station)

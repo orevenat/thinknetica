@@ -9,14 +9,10 @@ class Station
 
   def trains_count_by_type(type)
     current_type_trains = trains.select do |train|
-      train.class.to_s.to_sym == type
+      train.class == type
     end
     current_type_trains.size
   end
-
-  private
-
-  attr_writer :trains
 
   def add_train(train)
     trains << train
@@ -25,4 +21,8 @@ class Station
   def send_train(train)
     trains.delete(train)
   end
+
+  private
+
+  attr_writer :trains
 end
