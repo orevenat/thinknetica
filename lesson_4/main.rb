@@ -237,11 +237,11 @@ def control_train_menu(train)
   when 'c'
     add_carriage_to_train(train)
   when 'd'
-    train.remove_carriage
+    remove_carriage(train)
   when 'n'
-    train.to_next_station
+    next_station(train)
   when 'p'
-    train.to_prev_station
+    prev_station(train)
   when 'b'
     trains_menu
   else
@@ -262,12 +262,32 @@ def route_to_train(train)
 end
 
 def add_carriage_to_train(train)
+  puts 'вагон добавлен'
   train_type = train.class.to_s.to_sym
   if train_type == :PassengerTrain
     train.add_carriage(PassengerCarriage.new)
   elsif train_type == :passenger_train
     train.add_carriage(CargoCarriage.new)
   end
+end
+
+def remove_carriage(train)
+  if train.carriages_count > 0
+    train.remove_carriage
+    puts 'Вагон удален'
+  else
+    puts 'Нет вагонов для удаления'
+  end
+end
+
+def next_station(train)
+  train.to_next_station
+  puts train.show_current_station.name
+end
+
+def prev_station(train)
+  train.to_prev_station
+  puts train.show_current_station.name
 end
 
 main_menu
