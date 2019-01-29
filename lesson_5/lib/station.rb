@@ -1,10 +1,22 @@
+require_relative 'instance_counter'
+
 class Station
+  include InstanceCounter
+
+  @@stations = []
+
+  def self.all
+    @@stations
+  end
+
   attr_reader :trains
   attr_reader :name
 
   def initialize(name)
     @name = name
     @trains = []
+    @@stations << self
+    register_instance
   end
 
   def trains_count_by_type(type)

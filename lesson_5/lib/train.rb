@@ -1,12 +1,24 @@
-class Train
-  attr_reader :name
-  attr_reader :speed
-  attr_reader :carriages
+require_relative 'manufacturer'
+require_relative 'instance_counter'
 
-  def initialize(name)
+class Train
+  include Manufacturer
+  include InstanceCounter
+
+  attr_reader :name, :type, :carriages
+
+  @@trains = {}
+
+  def self.find(number)
+    @@trains[number]
+  end
+
+  def initialize(name, number)
     @name = name
     @carriages = []
     @speed = 0
+    @@trains[number] = self
+    register_instance
   end
 
   def add_carriage(carriage)
