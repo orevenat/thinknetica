@@ -1,7 +1,9 @@
 require_relative 'instance_counter'
+require_relative 'valid'
 
 class Station
   include InstanceCounter
+  include Valid
 
   @@stations = []
 
@@ -16,6 +18,7 @@ class Station
     @name = name
     @trains = []
     @@stations << self
+    validate!
     register_instance
   end
 
@@ -35,6 +38,11 @@ class Station
   end
 
   private
+
+  def validate!
+    raise "Name can't be empty" if name.nil?
+    raise 'Name should be at least 3 symbols' if name.length < 3
+  end
 
   attr_writer :trains
 end

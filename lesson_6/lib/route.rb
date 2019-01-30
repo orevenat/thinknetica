@@ -1,13 +1,15 @@
 require_relative 'instance_counter'
+require_relative 'valid'
 
 class Route
   include InstanceCounter
+  include Valid
 
   attr_reader :stations
 
   def initialize(start_station, end_station)
     @stations = [start_station, end_station]
-
+    validate!
     register_instance
   end
 
@@ -24,6 +26,13 @@ class Route
   end
 
   private
+
+  def validate!
+    raise 'Need 2 station at least' if station.count < 2
+    raise 'Station instances needed' if stations.any? do |station|
+      station.class != Station
+    end
+  end
 
   attr_writer :stations
 end
