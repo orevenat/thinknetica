@@ -9,7 +9,7 @@ class Train
   include InstanceCounter
   include Valid
 
-  attr_reader :number, :type, :carriages
+  attr_reader :number, :type, :carriages, :speed
   alias :name :number
 
   @@trains = {}

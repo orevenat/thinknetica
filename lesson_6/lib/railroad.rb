@@ -18,19 +18,19 @@ class Railroad
   NO_CARRIAGE = 'Нет вагонов для удаления'
 
   ACTION_LIST = [
-    ["Создать станцию", :add_new_station],
-    ["Создать поезд", :add_new_train],
-    ["Создать маршрут", :add_new_route],
-    ["Назначаить маршрут поезду", :route_to_train],
-    ["Добавить станцию в маршрут", :route_new_station],
-    ["Удалить станцию из маршрута", :route_remove_station],
-    ["Прицепить вагон к поезду", :add_carriage_to_train],
-    ["Отцепить вагона от поезда", :remove_carriage],
-    ["Переместить поезд по маршруту вперед", :next_station],
-    ["Переместить поезд по маршруту назад", :prev_station],
-    ["Вывести список станций", :show_stations_list],
-    ["Вывести список поездов на станции", :show_station_trains],
-    ["Выйти из программы", :exit]
+    ['Создать станцию', :add_new_station],
+    ['Создать поезд', :add_new_train],
+    ['Создать маршрут', :add_new_route],
+    ['Назначаить маршрут поезду', :route_to_train],
+    ['Добавить станцию в маршрут', :route_new_station],
+    ['Удалить станцию из маршрута', :route_remove_station],
+    ['Прицепить вагон к поезду', :add_carriage_to_train],
+    ['Отцепить вагона от поезда', :remove_carriage],
+    ['Переместить поезд по маршруту вперед', :next_station],
+    ['Переместить поезд по маршруту назад', :prev_station],
+    ['Вывести список станций', :show_stations_list],
+    ['Вывести список поездов на станции', :show_station_trains],
+    ['Выйти из программы', :exit]
   ]
 
   def initialize
@@ -47,7 +47,7 @@ class Railroad
 
   private
 
-  attr_accessor :trains, :routes, :stations
+  attr_accessor :trains, :routes, :stations, :carriages
 
   def menu_header(text)
     %(
@@ -176,6 +176,9 @@ class Railroad
     train.add_carriage(carriage)
     puts "#{carriage.name}#{CARRIAGE_ADDED}"
     sleep 1
+  rescue Exception => e
+    puts e.message
+    retry
   end
 
   def remove_carriage
