@@ -176,7 +176,7 @@ class Railroad
     train.add_carriage(carriage)
     puts "#{carriage.name}#{CARRIAGE_ADDED}"
     sleep 1
-  rescue Exception => e
+  rescue RuntimeError => e
     puts e.message
     retry
   end
