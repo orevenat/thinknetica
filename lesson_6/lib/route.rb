@@ -28,7 +28,7 @@ class Route
   private
 
   def validate!
-    raise 'Need 2 station at least' if station.count < 2
+    raise 'Need 2 station at least' if stations.count < 2
     raise 'Station instances needed' if stations.any? do |station|
       station.class != Station
     end

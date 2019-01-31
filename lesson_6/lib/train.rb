@@ -3,13 +3,14 @@ require_relative 'instance_counter'
 require_relative 'valid'
 
 class Train
-  NUMER_FORMAT = /^\w{3}-?\w{2}$/
+  NUMBER_FORMAT = /^\w{3}-?\w{2}$/
 
   include Manufacturer
   include InstanceCounter
   include Valid
 
-  attr_reader :name, :type, :carriages
+  attr_reader :number, :type, :carriages
+  alias :name :number
 
   @@trains = {}
 
@@ -17,8 +18,8 @@ class Train
     @@trains[number]
   end
 
-  def initialize(name, number)
-    @name = name
+  def initialize(number)
+    @number = number
     @carriages = []
     @speed = 0
     @@trains[number] = self
@@ -79,8 +80,6 @@ class Train
   attr_writer :speed, :carriages
 
   def validate!
-    raise "Name can't be empty" if name.nil?
-    raise 'Name should be at least 3 symbols' if name.length < 3
     raise "Number can't be nil" if number.nil?
     raise 'Number should be at least 6 symbols' if number.length < 5
     raise 'Number has invalid format' if number !~ NUMBER_FORMAT
