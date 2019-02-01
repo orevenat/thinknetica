@@ -39,6 +39,10 @@ class Train
     carriages.size
   end
 
+  def each_carriage(*)
+    carriages.each { |c| yield(c) }
+  end
+
   def add_speed(value)
     self.speed += value
   end

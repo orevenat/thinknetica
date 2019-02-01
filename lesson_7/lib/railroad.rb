@@ -16,6 +16,8 @@ class Railroad
   CARRIAGE_ADDED = ' вагон добавлен'
   CARRIAGE_REMOVED = 'Вагон удален'
   NO_CARRIAGE = 'Нет вагонов для удаления'
+  CARRIAGE_ADDED_RESULT = 'Вагон добавлен'
+  CARRIAGE_ADD_TITLE = 'Введите размер'
 
   ACTION_LIST = [
     ['Создать станцию', :add_new_station],
@@ -24,6 +26,7 @@ class Railroad
     ['Назначаить маршрут поезду', :route_to_train],
     ['Добавить станцию в маршрут', :route_new_station],
     ['Удалить станцию из маршрута', :route_remove_station],
+    ['Создать вагон', :create_new_carriage],
     ['Прицепить вагон к поезду', :add_carriage_to_train],
     ['Отцепить вагона от поезда', :remove_carriage],
     ['Переместить поезд по маршруту вперед', :next_station],
@@ -159,6 +162,28 @@ class Railroad
     station = find_in_collection(route.stations, STATIONS_LIST)
     route.remove_station(station)
     puts "#{STATION_REMOVED}#{station.name}"
+    sleep 1
+  rescue RuntimeError => e
+    puts e.message
+    retry
+  end
+
+  def create_new_carriage
+    puts CARRIAGE_ADD_TITLE
+    size = gets.chomp
+    menu_lines([['Пассажирский вагон', '1'], ['Грузовой вагон', '2']])
+
+    answer = gets.chomp
+    case answer
+    when '1'
+      new_carriage = PassengerCarriage.new(size)
+    when '2'
+      new_carriage = CargoCarriage.new(size)
+    else
+      create_new_carriage
+    end
+    carriages << new_carriage
+    puts "#{CARRIAGE_ADDED_RESULT}#{new_carriage.name}"
     sleep 1
   rescue RuntimeError => e
     puts e.message
