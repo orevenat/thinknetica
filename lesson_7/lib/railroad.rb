@@ -233,7 +233,7 @@ class Railroad
     carriage = find_in_collection(carriages_list, CARRIAGE_LIST)
     carriages << carriage
     train.add_carriage(carriage)
-    puts "#{carriage.full_name}#{CARRIAGE_ADDED}"
+    puts "#{carriage.name}#{CARRIAGE_ADDED}"
     sleep 1
   rescue RuntimeError => e
     puts e.message
@@ -243,7 +243,7 @@ class Railroad
   def show_train_carriages
     train = find_in_collection(trains, TRAIN_LIST)
     train.each_carriage do |c|
-      puts c.full_name
+      puts c.name
     end
   end
 
