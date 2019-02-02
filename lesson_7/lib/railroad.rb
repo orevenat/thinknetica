@@ -231,7 +231,6 @@ class Railroad
       end
     end
     carriage = find_in_collection(carriages_list, CARRIAGE_LIST)
-    carriages << carriage
     train.add_carriage(carriage)
     puts "#{carriage.name}#{CARRIAGE_ADDED}"
     sleep 1
