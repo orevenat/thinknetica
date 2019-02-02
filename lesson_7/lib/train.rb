@@ -39,7 +39,7 @@ class Train
     carriages.size
   end
 
-  def each_carriage(*)
+  def each_carriage
     carriages.each { |c| yield(c) }
   end
 
