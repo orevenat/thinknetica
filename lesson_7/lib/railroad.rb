@@ -16,8 +16,13 @@ class Railroad
   CARRIAGE_ADDED = ' вагон добавлен'
   CARRIAGE_REMOVED = 'Вагон удален'
   NO_CARRIAGE = 'Нет вагонов для удаления'
-  CARRIAGE_ADDED_RESULT = 'Вагон добавлен'
-  CARRIAGE_ADD_TITLE = 'Введите размер'
+  CARRIAGE_LIST = 'Список вагонов:'
+  CARRIAGE_ADDED_RESULT = 'Вагон добавлен '
+  CARRIAGE_ADD_TITLE = 'Выберите тип вагона'
+  CARRIAGE_ADD_COUNT = 'Введите количество мест'
+  CARRIAGE_ADD_VOLUME = 'Введите объем'
+  CARRIAGE_FILLED = 'Место/объем занято. Всего: '
+  CARRIAGE_CLEARED = 'Место/объем очищено. Всего:'
 
   ACTION_LIST = [
     ['Создать станцию', :add_new_station],
@@ -27,12 +32,15 @@ class Railroad
     ['Добавить станцию в маршрут', :route_new_station],
     ['Удалить станцию из маршрута', :route_remove_station],
     ['Создать вагон', :create_new_carriage],
+    ['Заполнить вагон', :fill_carriage],
+    ['Освободить вагон', :clear_carriage],
+    ['Показать список вагонов у поезда', :show_train_carriages],
     ['Прицепить вагон к поезду', :add_carriage_to_train],
     ['Отцепить вагона от поезда', :remove_carriage],
     ['Переместить поезд по маршруту вперед', :next_station],
     ['Переместить поезд по маршруту назад', :prev_station],
     ['Вывести список станций', :show_stations_list],
-    ['Вывести список поездов на станции', :show_station_trains],
+    ['Показать список поездов на станции', :show_station_trains],
     ['Выйти из программы', :exit]
   ]
 
@@ -79,11 +87,7 @@ class Railroad
   end
 
   def main_menu
-    begin
-      menu(ACTION_LIST);
-    rescue
-      retry
-    end
+    menu(ACTION_LIST)
   end
 
   def add_new_station
@@ -170,10 +174,17 @@ class Railroad
 
   def create_new_carriage
     puts CARRIAGE_ADD_TITLE
-    size = gets.chomp
     menu_lines([['Пассажирский вагон', '1'], ['Грузовой вагон', '2']])
-
     answer = gets.chomp
+    case answer
+    when '1'
+      puts CARRIAGE_ADD_COUNT
+    when '2'
+      puts CARRIAGE_ADD_VOLUME
+    else
+      create_new_carriage
+    end
+    size = gets.to_i
     case answer
     when '1'
       new_carriage = PassengerCarriage.new(size)
@@ -182,28 +193,58 @@ class Railroad
     else
       create_new_carriage
     end
-    carriages << new_carriage
     puts "#{CARRIAGE_ADDED_RESULT}#{new_carriage.name}"
+    carriages << new_carriage
     sleep 1
   rescue RuntimeError => e
     puts e.message
     retry
   end
 
+  def fill_carriage
+    carriage = find_in_collection(carriages, CARRIAGE_LIST)
+    carriage.fill
+    puts "#{CARRIAGE_FILLED}#{carriage.filled_size}/#{carriage.size}"
+    sleep 1
+  rescue RuntimeError => e
+    puts e.message
+    main_menu
+  end
+
+  def clear_carriage
+    carriage = find_in_collection(carriages, CARRIAGE_LIST)
+    carriage.clear
+    puts "#{CARRIAGE_CLEARED}#{carriage.filled_size}/#{carriage.size}"
+    sleep 1
+  rescue RuntimeError => e
+    puts e.message
+    main_menu
+  end
+
   def add_carriage_to_train
     train = find_in_collection(trains, TRAIN_LIST)
-    if train.class == PassengerTrain
-      carriage = PassengerCarriage.new
-    elsif train.class == CargoTrain
-      carriage = CargoCarriage.new
+    carriages_list = carriages.select do |x|
+      if train.class == PassengerTrain && x.class == PassengerCarriage
+        true
+      elsif train.class == CargoTrain && x.class == CargoCarriage
+        true
+      end
     end
+    carriage = find_in_collection(carriages_list, CARRIAGE_LIST)
     carriages << carriage
     train.add_carriage(carriage)
-    puts "#{carriage.name}#{CARRIAGE_ADDED}"
+    puts "#{carriage.full_name}#{CARRIAGE_ADDED}"
     sleep 1
   rescue RuntimeError => e
     puts e.message
     retry
+  end
+
+  def show_train_carriages
+    train = find_in_collection(trains, TRAIN_LIST)
+    train.each_carriage do |c|
+      puts c.full_name
+    end
   end
 
   def remove_carriage
@@ -239,9 +280,11 @@ class Railroad
     sleep 1
   end
 
-  def trains_on_station
+  def show_station_trains
     station = find_in_collection(stations, STATIONS_LIST)
-    puts "#{station.name} #{station.trains.map(&:name).join(' ')}"
+    station.each_train do |t|
+      puts t.name
+    end
     sleep 1
   end
 
