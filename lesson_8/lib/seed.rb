@@ -12,8 +12,6 @@ st2 = Station.new('Spb')
 st3 = Station.new('NN')
 st4 = Station.new('Kazan')
 st5 = Station.new('Vladimir')
-st6 = Station.new('Volgograd')
-st7 = Station.new('Vologda')
 
 rt1 = Route.new(st1, st2)
 rt1.add_station(st3)

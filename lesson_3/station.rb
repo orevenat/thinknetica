@@ -1,5 +1,5 @@
 class Station
-  TYPE = [:passanger, :cargo]
+  TYPE = %i[passanger cargo].freeze
 
   attr_reader :trains
   attr_reader :name

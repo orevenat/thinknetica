@@ -27,12 +27,12 @@ class Route
 
   private
 
+  attr_writer :stations
+
   def validate!
     raise 'Need 2 station at least' if stations.count < 2
     raise 'Station instances needed' if stations.any? do |station|
       station.class != Station
     end
   end
-
-  attr_writer :stations
 end

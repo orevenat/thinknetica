@@ -1,5 +1,4 @@
 class Railroad
-
   def initialize
     @trains = []
     @routes = []

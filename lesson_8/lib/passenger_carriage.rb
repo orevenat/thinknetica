@@ -3,13 +3,14 @@ require_relative 'valid'
 class PassengerCarriage < Carriage
   include Valid
 
-  attr_reader :place_count, :places_filled
+  attr_reader :place_count, :places_filled, :type
   alias size place_count
   alias filled_size places_filled
 
   def initialize(size)
     @place_count = size
     validate!
+    @type = :Passenger
     @places_filled = 0
   end
 
@@ -31,7 +32,7 @@ class PassengerCarriage < Carriage
 
   private
 
-  attr_writer :places_filled
+  attr_writer :places_filled, :type
 
   def can_fill?
     free_places > 0

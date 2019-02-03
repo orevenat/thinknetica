@@ -1,4 +1,4 @@
-coeff_name = ['a', 'b', 'c']
+coeff_name = %w[a b c]
 coeff = []
 
 coeff_name.each do |x|

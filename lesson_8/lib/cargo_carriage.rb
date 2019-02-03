@@ -3,13 +3,14 @@ require_relative 'valid'
 class CargoCarriage < Carriage
   include Valid
 
-  attr_reader :volume_size, :volume
+  attr_reader :volume_size, :volume, :type
   alias size volume_size
   alias filled_size volume
 
   def initialize(size)
     @volume_size = size
     validate!
+    @type = :Cargo
     @volume = 0
   end
 
@@ -31,7 +32,7 @@ class CargoCarriage < Carriage
 
   private
 
-  attr_writer :volume
+  attr_writer :volume, :type
 
   def can_fill?
     volume_size - volume > 0

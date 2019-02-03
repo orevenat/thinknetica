@@ -3,14 +3,14 @@ require_relative 'instance_counter'
 require_relative 'valid'
 
 class Train
-  NUMBER_FORMAT = /^\w{3}-?\w{2}$/
+  NUMBER_FORMAT = /^\w{3}-?\w{2}$/.freeze
 
   include Manufacturer
   include InstanceCounter
   include Valid
 
   attr_reader :number, :type, :carriages, :speed
-  alias :name :number
+  alias name number
 
   @@trains = {}
 

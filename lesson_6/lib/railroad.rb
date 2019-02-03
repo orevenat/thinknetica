@@ -1,21 +1,21 @@
 class Railroad
-  MAIN_TITLE = 'Программа для управления железной дорогой'
-  SET_STATION_NAME = 'Введите имя станции'
-  STATION_ADDED = 'Добавлена станция: '
-  STATION_REMOVED = 'Удалена станция: '
-  STATIONS_LIST = 'Список станций:'
-  STATION_NAME = 'Станция: '
-  SET_STATION_1 = 'Введите цифру первой станции'
-  SET_STATION_2 = 'Введите цифру второй станции'
-  ROUTE_ADDED = 'Маршрут построен: '
-  ROUTE_CONNECTED = 'Маршрут прикреплен: '
-  ROUTE_LIST = 'Список маршрутов:'
-  TRAIN_LIST = 'Список поездов:'
-  TRAIN_ADDED = 'Поезд добавлен: '
-  TRAIN_ADD_TITLE = 'Введите номер поезда в формате ххх-хх'
-  CARRIAGE_ADDED = ' вагон добавлен'
-  CARRIAGE_REMOVED = 'Вагон удален'
-  NO_CARRIAGE = 'Нет вагонов для удаления'
+  MAIN_TITLE = 'Программа для управления железной дорогой'.freeze
+  SET_STATION_NAME = 'Введите имя станции'.freeze
+  STATION_ADDED = 'Добавлена станция: '.freeze
+  STATION_REMOVED = 'Удалена станция: '.freeze
+  STATIONS_LIST = 'Список станций:'.freeze
+  STATION_NAME = 'Станция: '.freeze
+  SET_STATION_1 = 'Введите цифру первой станции'.freeze
+  SET_STATION_2 = 'Введите цифру второй станции'.freeze
+  ROUTE_ADDED = 'Маршрут построен: '.freeze
+  ROUTE_CONNECTED = 'Маршрут прикреплен: '.freeze
+  ROUTE_LIST = 'Список маршрутов:'.freeze
+  TRAIN_LIST = 'Список поездов:'.freeze
+  TRAIN_ADDED = 'Поезд добавлен: '.freeze
+  TRAIN_ADD_TITLE = 'Введите номер поезда в формате ххх-хх'.freeze
+  CARRIAGE_ADDED = ' вагон добавлен'.freeze
+  CARRIAGE_REMOVED = 'Вагон удален'.freeze
+  NO_CARRIAGE = 'Нет вагонов для удаления'.freeze
 
   ACTION_LIST = [
     ['Создать станцию', :add_new_station],
@@ -31,7 +31,7 @@ class Railroad
     ['Вывести список станций', :show_stations_list],
     ['Вывести список поездов на станции', :show_station_trains],
     ['Выйти из программы', :exit]
-  ]
+  ].freeze
 
   def initialize
     @trains = []
@@ -76,11 +76,9 @@ class Railroad
   end
 
   def main_menu
-    begin
-      menu(ACTION_LIST);
-    rescue
-      retry
-    end
+    menu(ACTION_LIST)
+  rescue StandardError
+    retry
   end
 
   def add_new_station

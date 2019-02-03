@@ -13,7 +13,6 @@ module InstanceCounter
   end
 
   module InstanceMethods
-
     protected
 
     def register_instance
