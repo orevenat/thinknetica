@@ -2,3 +2,9 @@ Documentation:
   Enabled: false
 Style/ClassVars:
   Enabled: false
+Metrics/ClassLength:
+  Max: 250
+Metrics/MethodLength:
+  Max: 21
+Metrics/AbcSize:
+  Max: 21
