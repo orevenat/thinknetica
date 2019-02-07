@@ -12,6 +12,22 @@ module Validation
       self.validates << { name: name, type: type, value: value }
     end
 
+    def validate_presence(val, _)
+      raise 'Must be not empty' if val.nil?
+    end
+
+    def validate_format(val, format)
+      raise 'Diffreent format error' if format !~ val
+    end
+
+    def validate_type(val, type)
+      raise 'Diffrent type error' if type != val.class
+    end
+
+    def validate_length(val, length)
+      raise "Min length is #{value}" if length > val.size
+    end
+
     protected
 
     attr_writer :validates
@@ -30,18 +46,10 @@ module Validation
     def validate!
       self.class.validates.each do |validate|
         var_name = "@#{validate[:name]}".to_sym
+        instance_value = instance_variable_get(var_name)
         value = validate[:value]
-        var_value = instance_variable_get(var_name)
-        case validate[:type]
-        when :presence
-          raise 'Must be not empty' if var_value.nil?
-        when :format
-          raise 'Diffreent format error' if value !~ var_value
-        when :type
-          raise 'Diffrent type error' if value != var_value.class
-        when :length
-          raise "Min length is #{value}" if value > var_value.size
-        end
+        type = validate[:type]
+        self.class.send "validate_#{type}".to_sym, instance_value, value
       end
     end
   end
