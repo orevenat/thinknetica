@@ -1,9 +1,9 @@
 require_relative 'instance_counter'
-require_relative 'valid'
+require_relative 'validation'
 
 class Station
   include InstanceCounter
-  include Valid
+  include Validation
 
   @@stations = []
 
@@ -13,6 +13,9 @@ class Station
 
   attr_reader :trains
   attr_reader :name
+
+  validate :name, :presence
+  validate :name, :length, 3
 
   def initialize(name)
     @name = name
@@ -42,11 +45,6 @@ class Station
   end
 
   private
-
-  def validate!
-    raise "Name can't be empty" if name.nil?
-    raise 'Name should be at least 3 symbols' if name.length < 3
-  end
 
   attr_writer :trains
 end

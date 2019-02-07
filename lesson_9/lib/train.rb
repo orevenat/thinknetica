@@ -1,16 +1,21 @@
 require_relative 'manufacturer'
 require_relative 'instance_counter'
-require_relative 'valid'
+require_relative 'validation'
+require_relative 'accessors'
 
 class Train
   NUMBER_FORMAT = /^\w{3}-?\w{2}$/.freeze
 
   include Manufacturer
   include InstanceCounter
-  include Valid
+  include Validation
+  extend Accessors
 
   attr_reader :number, :carriages, :speed
   alias name number
+
+  validate :number, :presence
+  validate :number, :format, NUMBER_FORMAT
 
   @@trains = {}
 
@@ -82,12 +87,6 @@ class Train
 
   attr_accessor :route, :current_station
   attr_writer :speed, :carriages
-
-  def validate!
-    raise "Number can't be nil" if number.nil?
-    raise 'Number should be at least 6 symbols' if number.length < 5
-    raise 'Number has invalid format' if number !~ NUMBER_FORMAT
-  end
 
   def can_join_carriage?(carriage)
     speed.zero? && carriage_type_same?(carriage)

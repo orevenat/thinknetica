@@ -26,7 +26,7 @@ class Railroad
 
   ACTION_LIST = [
     ['Создать станцию', :create_station],
-    ['Создать поезд', :create_route],
+    ['Создать поезд', :create_train],
     ['Создать маршрут', :create_route],
     ['Назначаить маршрут поезду', :add_route_to_train],
     ['Добавить станцию в маршрут', :add_station_to_route],
