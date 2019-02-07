@@ -1,7 +1,6 @@
 require_relative 'manufacturer'
 require_relative 'instance_counter'
 require_relative 'validation'
-require_relative 'accessors'
 
 class Train
   NUMBER_FORMAT = /^\w{3}-?\w{2}$/.freeze
@@ -9,7 +8,6 @@ class Train
   include Manufacturer
   include InstanceCounter
   include Validation
-  extend Accessors
 
   attr_reader :number, :carriages, :speed
   alias name number

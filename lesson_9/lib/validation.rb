@@ -38,7 +38,7 @@ module Validation
         when :format
           raise 'Diffreent format error' if value !~ var_value
         when :type
-          raise 'Diffrent type error' if value != var_value
+          raise 'Diffrent type error' if value != var_value.class
         when :length
           raise "Min length is #{value}" if value > var_value.size
         end
