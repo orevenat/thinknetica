@@ -12,7 +12,9 @@ module Validation
       self.validates << { name: name, type: type, value: value }
     end
 
-    def validate_presence(val, _)
+    protected
+
+    def validate_presence(val, _empty)
       raise 'Must be not empty' if val.nil?
     end
 
@@ -27,8 +29,6 @@ module Validation
     def validate_length(val, length)
       raise "Min length is #{value}" if length > val.size
     end
-
-    protected
 
     attr_writer :validates
   end
@@ -49,7 +49,7 @@ module Validation
         instance_value = instance_variable_get(var_name)
         value = validate[:value]
         type = validate[:type]
-        self.class.send "validate_#{type}".to_sym, instance_value, value
+        self.class.send "validate_#{type}".to_sym, instance_value, *value
       end
     end
   end
